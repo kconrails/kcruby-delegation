@@ -10,7 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120110235221) do
+ActiveRecord::Schema.define(:version => 20120111001356) do
+
+  create_table "links", :force => true do |t|
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "medias", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "media_type"
+    t.integer  "media_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medias", ["media_type", "media_id"], :name => "index_medias_on_media_type_and_media_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -30,5 +47,11 @@ ActiveRecord::Schema.define(:version => 20120110235221) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
+
+  create_table "videos", :force => true do |t|
+    t.string   "embed_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
