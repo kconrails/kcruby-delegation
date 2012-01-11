@@ -12,4 +12,6 @@ describe User do
 
   it { should delegate :tomorrow, :to => :date }
   it { should delegate :yesterday, :to => :date }
+  
+  it { should delegate :can_email?, :to => :permissions }
 end
