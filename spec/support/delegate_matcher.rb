@@ -7,20 +7,26 @@ module DelegateMatcher
   
     def matches? target
       raise "#{target.inspect} must delegate to something!" unless @options.has_key?(:to)
+      
       @delegate_class = @options[:to].to_s.camelize.constantize
     
       @target = target
 
       @delegate_class.any_instance.stubs(@delegated_method).returns(arbitrary_value)
-      target.send(@delegated_method) == arbitrary_value
+
+      begin
+        target.send(@delegated_method) == arbitrary_value
+      rescue
+        false
+      end
     end
   
     def failure_message
-      "expected #{@target.inspect} to delegate the #{@delegated_method} method to #{@delegate_class}"
+      "expected #{@target.inspect} to delegate the #{@delegated_method} method to #{@options[:to]}"
     end
   
     def negative_failure_message
-      "expected #{@target.inspect} not to delegate the #{@delegated_method} method to #{@delegate_class}"
+      "expected #{@target.inspect} not to delegate the #{@delegated_method} method to #{@options[:to]}"
     end
   
     private

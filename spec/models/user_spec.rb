@@ -9,4 +9,7 @@ describe User do
   it { should belong_to :role }
 
   it { should delegate :name, :to => :role }
+
+  it { should delegate :tomorrow, :to => :date }
+  it { should delegate :yesterday, :to => :date }
 end
